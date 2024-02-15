@@ -8,9 +8,9 @@ We have the following courses:
 
 ## Purpose of this repository on GitHub
 
-During these courses, we must solve home assignments, therefore, I need to publish my code here for the teacher to review it comfortably without the need to download any of my scripts<a name="myfootnote1">1</a>: Footnote content goes here.
+During these courses, we must solve home assignments, therefore, I need to publish my code here for the teacher to review it comfortably without the need to download any of my scripts
 
-
+<a name="script">Script</a>: The script is a file containing the algorithm designed for a specific purpose, or performing certain actions as in a JavaScript script file where we modify the DOM content or its elements. 
 
 ## Algorithms and Data structures
 
