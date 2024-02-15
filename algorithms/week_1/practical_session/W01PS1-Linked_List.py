@@ -282,34 +282,46 @@ class LinkedList:
         return self.compute_length()
 
 
-# Start of the script
-linked_list = LinkedList() 
+def main():
+    # Start of the script
+    linked_list = LinkedList() 
+    
+    # create the initial linked list
+    linked_list.create_mock_linked_list()
+    
+    # print the updated linked list
+    linked_list.display()
+    print() # empty string
+    print(len(linked_list), end="\n")
+    
+    # try to insert
+    linked_list.append_to_front(30)
+    linked_list.display()
+    
+    print()
+    print(len(linked_list), end="\n")
+    
+    # to the end
+    linked_list.append_to_end(100)
+    linked_list.display()
+    
+    print()
+    print(len(linked_list), end="\n")
+    
+    # add to the position
+    linked_list.insert_node(110, 3)
+    linked_list.display()
+    
+    print()
+    print(len(linked_list), end="\n")
 
-# create the initial linked list
-linked_list.create_mock_linked_list()
+    # test deletion
+    linked_list.delete_node(3)
+    linked_list.display()
 
-# print the updated linked list
-linked_list.display()
-print() # empty string
-print(len(linked_list), end="\n")
+    print()
+    print(len(linked_list), end="\n"))
 
-# try to insert
-linked_list.append_to_front(30)
-linked_list.display()
 
-print()
-print(len(linked_list), end="\n")
-
-# to the end
-linked_list.append_to_end(100)
-linked_list.display()
-
-print()
-print(len(linked_list), end="\n")
-
-# add to the position
-linked_list.insert_node(110, 3)
-linked_list.display()
-
-print()
-print(len(linked_list), end="\n")
+if __name__ == "__main__":
+    main()
