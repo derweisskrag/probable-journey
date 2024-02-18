@@ -1,6 +1,7 @@
 # Replace # TODO: with your code
 
 class Node:
+    """The node used in CircularLinkedList class"""
     def __init__(self, data: int) -> None:
         """A node object used by the linked list.
 
@@ -37,10 +38,10 @@ class Node:
 
 
 class CircularLinkedList:
-    def __init__(self):
+    def __init__(self, head: Node) -> None:
         """Circular linked list
         """
-        self._head = None
+        self._head = head
         self._mock_values = [90, 80, 60, 50]
 
 
@@ -51,9 +52,6 @@ class CircularLinkedList:
 
     @head.setter
     def head(self, node: Node) -> None:
-        if node is None:
-            return
-
         if isinstance(node, Node):
             self._head = node
         else:
@@ -79,7 +77,7 @@ class CircularLinkedList:
         current = self.head
         yield current
 
-        while current.next != self.head:
+        while current.next:
             current = current.next
             yield current
 
@@ -97,8 +95,13 @@ class CircularLinkedList:
                 circular linked list.
         """
 
+        if not self.head:
+            return None
+
         current = self.head
-        while current.next != self.head:
+
+
+        while current:
             current = current.next
 
         return current
@@ -132,7 +135,7 @@ class CircularLinkedList:
             current.next = new_node
             current = new_node
 
-        current.next = self.head
+        #current.next = self.head
 
 
     def compute_length(self) -> int:
@@ -149,18 +152,17 @@ class CircularLinkedList:
         count = 1
         current = start
 
-        while current.next != start:
-            # increase the count 
+        while current.next:
+            # increase the count
             count += 1
 
             # traverse the list
             current = current.next
 
-            if current == end:
-                return count
+        
+        return count
 
 
-    # display circular linked list A->B->C in format: A->B->C->A
     def display(self) -> None:
         """This method displays the circular linked list.
         """
@@ -202,8 +204,10 @@ class CircularLinkedList:
         if not self.has_head():
             self.head = Node(data)
         else:
-            last_node = self.get_last_node
+            last_node = self.get_last_node()
             new_node = Node(data)
+
+            
 
             last_node.next = new_node
             new_node.next = self.head
@@ -226,7 +230,7 @@ class CircularLinkedList:
         new_node = Node(data)
 
         if not self.has_head() \
-            or postion == 0:
+            or position == 0:
             # append the node to the front
             self.append_to_front(data)
         elif position == self.compute_length() - 1:
@@ -262,6 +266,7 @@ class CircularLinkedList:
             last_node = self.get_last_node()
             node_to_delete = last_node
             last_node.next = self.head
+            return node_to_delete
         else:
             current = self.head
             for _ in range(position - 1):
@@ -273,16 +278,3 @@ class CircularLinkedList:
             current.next = node_to_delete.next
 
             return node_to_delete
-
-
-
-# Start of the script
-linked_list = CircularLinkedList()
-
-# create the initial linked list
-linked_list.create_mock_linked_list()
-
-# print the updated linked list
-linked_list.display()
-
-

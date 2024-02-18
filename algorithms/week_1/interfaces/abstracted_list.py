@@ -11,6 +11,13 @@ class Position(Enum):
     END="END"
 
 
+class Action(Enum):
+    """Action to perfrom on the linked list"""
+    DELETE="DELETE"
+    INSERT="INSERT"
+    UPDATE="UPDATE"
+
+
 class AbstractedNode:
     """Represents the node of the list"""
     def __init__(self, data: int) -> None:
@@ -69,7 +76,7 @@ class AbstractedLinkedList(ABC):
 
 
     @abstractmethod
-    def insert_node(self, data: int, position: Position | int) -> None:
+    def insert_node(self, data: int, position: Position | int, action: Action) -> None:
         """Adds node to a specific position of the list.
 
         Args:
@@ -97,7 +104,7 @@ class AbstractedLinkedList(ABC):
 
 
     @abstractmethod
-    def delete_node(self, position: Position | int) -> AbstractedNode:
+    def delete_node(self, position: Position | int, action: Action) -> AbstractedNode:
         """Deletes a node at the specified position.
 
         Args:
