@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
+
 class Position(Enum):
     """Provides navigation accross the Linked List."""
     START="START"

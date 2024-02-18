@@ -2,11 +2,7 @@
 
 from typing import override
 
-from interfaces.list import (
-    AbstractedLinkedList,
-    AbstractedNode,
-    Position
-)
+from abstracted_list import AbstractedLinkedList, AbstractedNode, Position
 
 class Node(AbstractedNode):
     """Represents the node of the linked list."""
@@ -20,6 +16,9 @@ class Node(AbstractedNode):
 
         # must be an integer
         assert isinstance(data, int), f"The data {data} must be an integer"
+
+        # call super
+        super().__init__(data)
 
         # instantiate
         self._data = data
@@ -53,6 +52,10 @@ class LinkedList(AbstractedLinkedList):
             head (Node): a starting node to create
                 a linked list.
         """
+
+        # call the super
+        super().__init__(head)
+
         self._head = None if not head else head
         self._tail = None
         self._test_values: list[int] = [90, 80, 60, 50]

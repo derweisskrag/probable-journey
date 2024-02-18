@@ -1,11 +1,8 @@
-"""The entry point"""
-
-from implementation.linked_list import LinkedList, Node
+"""Entry point"""
 
 def main():
-    """The main function"""
-    linked_list = LinkedList(Node(2))
-    print(linked_list.has_head())
+    """Main function"""
+    print("Nothing")
 
 if __name__ == "__main__":
     main()
