@@ -1,4 +1,15 @@
-class Node:
+"""This modules contains the linked list"""
+
+from typing import override
+
+from interfaces.list import (
+    AbstractedLinkedList,
+    AbstractedNode,
+    Position
+)
+
+class Node(AbstractedNode):
+    """Represents the node of the linked list."""
     def __init__(self, data: int) -> None:
         """This class represents the node used in
         LinkedList data structure.
@@ -6,9 +17,9 @@ class Node:
         Args:
             data (int): an integer.
         """
-        
+
         # must be an integer
-        assert isinstance(data, int), f"The data must be an integer"
+        assert isinstance(data, int), f"The data {data} must be an integer"
 
         # instantiate
         self._data = data
@@ -17,6 +28,7 @@ class Node:
 
     @property
     def data(self):
+        """Retrieves the data of the node."""
         return self._data
 
 
@@ -32,15 +44,17 @@ class Node:
         return self.data == other.data
 
 
-class LinkedList:
+class LinkedList(AbstractedLinkedList):
+    """Represents linked-list."""
     def __init__(self, head: Node = None) -> None:
-        """This class represents the LinkedList.
+        """Initializes the linked list.
 
         Args:
             head (Node): a starting node to create
                 a linked list.
         """
         self._head = None if not head else head
+        self._tail = None
         self._test_values: list[int] = [90, 80, 60, 50]
 
 
@@ -49,7 +63,7 @@ class LinkedList:
         """Get the test values to create a mock linked list.
         """
         return self._test_values
-    
+
 
     @property
     def head(self) -> Node:
@@ -68,6 +82,20 @@ class LinkedList:
 
         # set the head to a node
         self._head = node
+
+
+    @property
+    def tail(self) -> Node:
+        """Retrieve the last node of the list."""
+        return self._tail
+
+
+    @tail.setter
+    def tail(self, node: Node) -> None:
+        """Sets a node to the tail."""
+        if not isinstance(node, Node):
+            raise TypeError(f"Cannot assign {node} to the tail")
+        self._tail = node
 
 
     def traverse(self):
@@ -129,7 +157,7 @@ class LinkedList:
 
             # create new_node
             new_node = Node(values[index])
-            
+
             # form the list
             current.next = new_node
             current = new_node
@@ -153,73 +181,71 @@ class LinkedList:
         return self.head is not None
 
 
-    # method to append a node
+    @override
     def append_to_end(self, data: int) -> None:
         """This method is used to insert 
         a new node to the linked list to the end.
         """
-
-        if not self.has_head():
-            self.head = Node(data)
-        else:
-            # get the head
-            head = self.head
-
-            # new node to add
-            new_node = Node(data)
-
-            # get the last node
-            last_node = self.get_last_node()
-
-            # insert the new node
-            last_node.next = new_node
+        self.insert_node(data, Position.END)
 
 
+    @override
+    def append_to_middle(self, data: int) -> None:
+        """Adds the node to the middle of the linked list."""
+        self.insert_node(data, Position.MIDDLE)
+
+
+    @override
     def append_to_front(self, data: int) -> None:
         """This methods adds the node to the front
         """
-
-        if not self.has_head():
-            self.head = Node(data)
-        else:
-            # new_node to insert
-            new_node = Node(data)
-
-            # arrange the node to the front
-            new_node.next = self.head
-            self.head = new_node
+        self.insert_node(data, Position.START)
 
 
-    # insert node to linked list
-    def insert_node(self, 
-        data: int, 
-        position: int) -> None:
+    @override
+    def insert_node(self,
+        data: int,
+        position: Position | int) -> None:
         """The methods adds the node to the speficied position.
 
         Args:
             data (int): an integer - valued hold by the node.
             position (int): an index.
         """
-
-        # create new_node 
-        new_node = Node(data)
-
-        if not self.has_head():
-            new_node.next = self.head
-            self.head = new_node 
-        else:
-            # traverse the list starting from head
-            current = self.head
-            for _ in range(position - 1):
-                if current is None:
-                    return # exit the loop when current is None
-                current = current.next
-
-            new_node.next = current.next
-            current.next = new_node
+        return 0
 
 
-    # method to delete node at the given position
+    @override
+    def delete_head(self) -> Node:
+        """Deletes the head (the first node in the list) of the linked list.
+        
+        Returns:
+            head (Node): the head of the linked list.
+        """
+        self.delete_node(Position.START)
+
+
+    @override
+    def delete_middle_node(self) -> Node:
+        """Deletes the middle node of the linked list.
+        
+        Returns:
+            middle (Node): the middle node of the linked list.
+        """
+        self.delete_node(Position.MIDDLE)
+
+
+    @override
+    def delete_tail(self) -> Node:
+        """Deletes the tail (the last node in the list) of the linked list.
+
+        Returns:
+            tail (Node): the tail of the linked list.
+        """
+        self.delete_node(Position.END)
+
+
+    @override
     def delete_node(self, position: int) -> Node:
         """The method deletes the node at the specified position.
 
@@ -234,7 +260,7 @@ class LinkedList:
         if position == 0:
             node_to_delete = self.head
             self.head = self.head.next
-            return node_to_delete 
+            return node_to_delete
 
         # traverse the list starting from head
         current = self.head
@@ -271,57 +297,11 @@ class LinkedList:
 
             if current == end:
                 return count
-                
 
 
     def __repr__(self) -> str:
-        return f"LinkedList(head={self.head}, length={self.length})"
+        return f"LinkedList(head={self.head}, length={self.compute_length()})"
 
 
     def __len__(self) -> int:
         return self.compute_length()
-
-
-def main():
-    # Start of the script
-    linked_list = LinkedList() 
-    
-    # create the initial linked list
-    linked_list.create_mock_linked_list()
-    
-    # print the updated linked list
-    linked_list.display()
-    print() # empty string
-    print(len(linked_list), end="\n")
-    
-    # try to insert
-    linked_list.append_to_front(30)
-    linked_list.display()
-    
-    print()
-    print(len(linked_list), end="\n")
-    
-    # to the end
-    linked_list.append_to_end(100)
-    linked_list.display()
-    
-    print()
-    print(len(linked_list), end="\n")
-    
-    # add to the position
-    linked_list.insert_node(110, 3)
-    linked_list.display()
-    
-    print()
-    print(len(linked_list), end="\n")
-
-    # test deletion
-    linked_list.delete_node(3)
-    linked_list.display()
-
-    print()
-    print(len(linked_list), end="\n"))
-
-
-if __name__ == "__main__":
-    main()
