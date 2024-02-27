@@ -332,7 +332,7 @@ class DequeList:
 
 	def is_empty(self) -> bool:
 		"""Checks if the deque is empty"""
-		return self._size == 0
+		return len(self._deque) == 0
 
 
 	def enqueue_front(self, value: int) -> None:
